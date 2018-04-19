@@ -1,5 +1,6 @@
 #include "numerical.h"
 
+
 numerical::numerical(double(*fxn)(const double x), double aConst, double bConst, double hConst)
 {
 	f = fxn;
@@ -30,6 +31,11 @@ numerical::numerical(const double xConst[], double const yConst[], int size)
 	f = NULL;
 }
 
+numerical::numerical(const numerical & n)
+{
+	*this = n;
+}
+
 double* numerical::get_x_values()
 {
 	return x;
@@ -55,4 +61,19 @@ void numerical::print_values(void)
 	for (int i = 0; i < ArraySize; i++) {
 		std::cout << "x = " << x[i] << ", y = " << y[i] << std::endl;
 	}
+}
+
+numerical& numerical::operator=(const numerical &n) {
+
+	a = n.a;
+	ArraySize = n.ArraySize;
+	a = n.a;
+	b = n.b;
+	y = n.y;
+	x = n.x;
+	f = n.f;
+	h = n.h;
+
+	return *this;
+
 }
