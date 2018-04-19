@@ -27,15 +27,21 @@
     <ClInclude Include="numerical.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleApplication1.cpp">
+    <ClCompile Include="numerical.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="numerical.cpp">
+    <ClCompile Include="NumericalAnalysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
