@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <vector>
+using namespace std;
 class numerical
 {
 public:
@@ -7,8 +9,8 @@ public:
 	numerical::numerical(const double xConst[], const double y[], int size);
 	numerical::numerical(const numerical &n);
 	numerical::numerical();
-	double* get_x_values();
-	double* get_y_values();
+	vector <double> get_x_values();
+	vector <double> get_y_values();
 	double bisection_algorithm(const double TOL);
 	int get_size();
 	void print_values(void);
@@ -17,12 +19,13 @@ public:
 private:
 	double(*f)(const double x);
 	double h;
-	int ArraySize;
+	int n;
 	double a;
 	double b;
-	double *y;
-	double *x;
-	
+	//double *y;
+	//double *x;
+	vector <double> x;
+	vector <double> y;
 
 };
 

@@ -1,7 +1,5 @@
 #include "ode.h"
 
-
-
 ode::ode(double(*fc)(double y, double t), double(*FtC)(double y, double t),
 	double aC, double bC, double hC, double initC)
 {
@@ -9,6 +7,47 @@ ode::ode(double(*fc)(double y, double t), double(*FtC)(double y, double t),
 	n = (b - a) / h;
 	f = fc;
 	Ft = FtC;
+}
+
+void ode::print_solution(void)
+{
+	using namespace std;
+	switch (solveMethod)
+	{
+	case UNSOLVED:
+		cout << "The ODE has not been solved." << endl;
+		break;
+	case TAYLOR:
+		for (int i = 0; i < t.size(); i++) {
+			cout << "t[" << i << "] = " << t[i];
+			cout << ", w[" << i << "] = " << w[i] << endl;
+		}
+		break;
+	case RKOF:
+		for (int i = 0; i < t.size(); i++) {
+			cout << "t[" << i << "] = " << t[i];
+			cout << ", w[" << i << "] = " << w[i] << endl;;
+			cout << ", h" << i << " = " << rungKutFehlHValues[i] << endl;
+		}
+		break;
+	case RKF:
+		cout << "Runge Kutta Fehlberg Solution: " << endl;
+		for (int i = 0; i < t.size(); i++) {
+			cout << "t[" << i << "] = " << t[i];
+			cout << ", w[" << i << "] = " << w[i];
+			if (i != 0) {
+				cout << ", h[" << i << "] = " << rungKutFehlHValues[i - 1];
+
+			}
+			cout << endl;
+		}
+		break;
+	case RKFERROR:
+		cout << "The ODE failed for Runge Kutta Fehlberg." << endl;
+		break;
+	default:
+		break;
+	}
 }
 
 void ode::taylor_method(void)
@@ -110,6 +149,8 @@ void ode::runge_kutte_fehlberg(const double hMIN, const double hMAX, const doubl
 		}
 	}
 }
+
+
 
 
 ode::~ode()

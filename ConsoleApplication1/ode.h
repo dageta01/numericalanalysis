@@ -4,13 +4,14 @@
 #include <cmath>
 using namespace std;
 
-typedef enum {
+enum METHOD {
 	UNSOLVED,
 	TAYLOR,
 	RKOF,
 	RKF,
 	RKFERROR
-}METHOD;
+};
+
 class ode
 {
 public:
@@ -20,6 +21,7 @@ public:
 	void print_wt(void);
 	void runge_kutta_four(void);
 	void runge_kutte_fehlberg(const double hMIN, const double hMAX, const double TOL);
+	void print_solution(void);
 	~ode();
 private:
 	double RKF_Math(double *k);
@@ -36,6 +38,6 @@ private:
 	vector <double> w;
 	vector <double> t;
 	vector <double> rungKutFehlHValues;
-	METHOD solveMethod = UNSOLVED;
+	enum METHOD solveMethod = UNSOLVED;
 };
 

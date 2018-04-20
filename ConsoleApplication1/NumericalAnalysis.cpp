@@ -6,6 +6,7 @@
 #include "numerical.h"
 #include "ode.h"
 #include <math.h>
+#include <vector>
 
 double f(double x);
 
@@ -15,15 +16,20 @@ double f2p(double, double);
 int main()
 {
 	
-	//numerical n(f, 1, 2, 0.1);
-	//numerical n2(n);
-	//n.print_values();
-	//n2.print_values();
-	//double p = n.bisection_algorithm(0.00001);
+	numerical n(f, 1, 2, 0.1);
+	numerical n2(n);
+	
+	n.print_values();
+	n2.print_values();
+	double p = n.bisection_algorithm(0.00001);
+	std::vector <double> test = n.get_x_values();
+	std::cout << test.back() << std::endl;
 	//std::cout << p << std::endl;
+	/*
 	ode o(f2, f2p, 1.0, 2.0, 0.1, -1.0 / log(2.0));
 	o.runge_kutte_fehlberg(0.01, 0.05, 0.000000001);
-	o.print_wt();
+	o.print_solution();
+	*/
 	std::getchar();
     return 0;
 }
