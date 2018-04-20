@@ -87,7 +87,7 @@ double numerical::bisection_algorithm(const double TOL)
 
 int numerical::get_size()
 {
-	return n;
+	return x.size();
 }
 
 

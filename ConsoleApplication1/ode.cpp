@@ -53,7 +53,7 @@ void ode::print_solution(void)
 void ode::real_compare(double(*fact)(double t))
 {
 	using namespace std;
-	if (solveMethod == UNSOLVED) {
+	if (solveMethod == UNSOLVED || solveMethod == RKFERROR) {
 		cout << "The ODE has not yet been solved." << endl;
 		return;
 	}
@@ -75,12 +75,12 @@ void ode::taylor_method(void)
 	t.clear();
 	w.push_back(init);
 	t.push_back(a);
-	term[0] = f(w[0], t[0]);
+	term[0] = f(t[0], w[0]);
 	term[0] += h / 2.0 * Ft(t[0], w[0]);
 	for (int i = 1; i <= n ; i++) {
 		t.push_back(t.back() + h);
 		w.push_back(w.back() + h*term[i - 1]);
-		term[i] = f(t[i- 1], w.back());
+		term[i] = f(t.back(), w.back());
 		term[i] += h / 2.0 * Ft(t.back(), w.back());
 	}
 	solveMethod = TAYLOR;

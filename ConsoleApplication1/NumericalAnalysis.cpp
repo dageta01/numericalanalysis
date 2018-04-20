@@ -27,8 +27,8 @@ int main()
 	*/
 	//std::cout << p << std::endl;
 	
-	ode o(f2, f2p, 1.0, 2.0, 0.1, -1.0 / log(2.0));
-	o.runge_kutta_four();
+	ode o(f2, f2p, 1.0, 2.0, 0.1, 1);
+	o.runge_kutte_fehlberg(0.005,0.5,0.01);
 	o.real_compare(factual);
 
 	std::getchar();
@@ -40,12 +40,12 @@ double f(double x) {
 }
 
 double f2(double t, double y) {
-	return y*y / (1 + t);
+	return y*t;
 }
 double f2p(double t, double y) {
-	return 1 / (y + 1);
+	return y;
 }
 
 double factual(double t) {
-	return -1.0 / log(t + 1.0);
+	return exp(1.0 / 2.0 * (-1.0 + t * t));
 }
