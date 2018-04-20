@@ -50,6 +50,24 @@ void ode::print_solution(void)
 	}
 }
 
+void ode::real_compare(double(*fact)(double t))
+{
+	using namespace std;
+	if (solveMethod == UNSOLVED) {
+		cout << "The ODE has not yet been solved." << endl;
+		return;
+	}
+	double factual = 0;
+	double error = 0;
+	for (int i = 0; i < t.size(); i++) {
+		factual = fact(t[i]);
+		error = fabs(w[i] - factual);
+		cout << "t[" << i << "] = " << t[i] << ", w[" << i
+			<< "] = " << w[i] << " f(t[" << i << "]) = "
+			<< factual << ", error = " << error << endl;
+	}
+}
+
 void ode::taylor_method(void)
 {
 	double *term = new double[n + 1];
@@ -150,13 +168,6 @@ void ode::runge_kutte_fehlberg(const double hMIN, const double hMAX, const doubl
 	}
 }
 
-
-
-
-ode::~ode()
-{
-}
-
 double ode::RKF_Math(double *k)
 {
 	double funcInputT, funcInputW, r;
@@ -195,4 +206,8 @@ double ode::RKF_Math(double *k)
 	r = 1 / h * fabs(r);
 
 	return r;
+}
+
+ode::~ode()
+{
 }

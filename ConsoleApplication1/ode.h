@@ -22,6 +22,7 @@ public:
 	void runge_kutta_four(void);
 	void runge_kutte_fehlberg(const double hMIN, const double hMAX, const double TOL);
 	void print_solution(void);
+	void real_compare(double(*fact)(double t));
 	~ode();
 private:
 	double RKF_Math(double *k);
