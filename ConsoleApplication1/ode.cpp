@@ -26,6 +26,7 @@ void ode::taylor_method(void)
 		term[i] = f(w[i- 1], t[i - 1]);
 		term[i] += h / 2.0 * Ft(w[i - 1], t[i - 1]);
 	}
+	solveMethod = "Taylor Method";
 }
 
 void ode::print_wt(void)
@@ -35,6 +36,28 @@ void ode::print_wt(void)
 		cout << "t[" << i << "] = " << t[i];
 		cout << ", w[" << i << "] = " << w[i] << endl;
 	}
+}
+
+void ode::runga_kutta_four(void)
+{
+	int n = (b - a) / h;
+	w[0] = init;
+	t[0] = a;
+	double *k = new double[4];
+	double term;
+
+	for (int i = 1; i <= n; i++) {
+		k[0] = h*f(w[i - 1], t[i - 1]);
+		k[0] = h*f(w[i - 1], t[i - 1i);
+		k[1] = h*f(w[i - 1] + h, t[i - 1] + k[0] / 2.0);
+		k[2] = h*f(w[i - 1] + h / 2.0, t[i - 1] + k[1] / 2.0);
+		k[3] = h*f(w[i - 1] + h, t[i - 1] + k[2]);
+
+		term = (k[0] + 2 * k[1] + 2 * k[2] + k[3]) / 6;
+		w[i] = w[i - 1] + term;
+		t[i] = t[i - 1] + h;
+	}
+	solveMethod = "Runga Kutta Order Four";
 }
 
 

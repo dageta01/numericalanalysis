@@ -7,6 +7,7 @@ public:
 		double aC, double bC, double hC, double initC);
 	void taylor_method(void);
 	void print_wt(void);
+	void runga_kutta_four(void);
 	~ode();
 private:
 	double(*f)(double y, double t);
@@ -18,5 +19,7 @@ private:
 	double init;
 	double *w;
 	double *t;
+
+	std::string solveMethod = "NOT SOLVED";
 };
 

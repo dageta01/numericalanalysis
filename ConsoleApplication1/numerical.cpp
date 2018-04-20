@@ -36,6 +36,10 @@ numerical::numerical(const numerical & n)
 	*this = n;
 }
 
+numerical::numerical()
+{
+}
+
 double* numerical::get_x_values()
 {
 	return x;
@@ -44,6 +48,43 @@ double* numerical::get_x_values()
 double* numerical::get_y_values()
 {
 	return y;
+}
+
+
+double numerical::bisection_algorithm(const double TOL)
+{
+	using namespace std;
+	double p, fa, fp;
+	p = (a + b) / 2.0;
+	fa = f(a);
+	fp = f(p);
+	if (f == NULL) {
+		cout << "The bisection algorithm only works if"
+			" the numerical class has been given a"
+			" valid function pointer. " << endl;
+		return 0xFFFFFFFF;
+	}
+	while (fp != 0 && (b - a) / 2 > TOL)
+	{
+		if (fp*fa > 0)
+		{
+			a = p;
+			p = (a + b) / 2.0;
+			fa = f(a);
+			fp = f(p);
+		}
+		else
+		{
+			b = p;
+			p = (a + b) / 2.0;
+			fa = f(a);
+			fp = f(p);
+		}
+#ifdef SHOWSTEPS
+		cout << "Step: " << i << " p = " << p;
+#endif
+	}
+	return p;
 }
 
 int numerical::get_size()
