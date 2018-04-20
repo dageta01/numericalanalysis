@@ -1,5 +1,16 @@
 #pragma once
 #include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+typedef enum {
+	UNSOLVED,
+	TAYLOR,
+	RKOF,
+	RKF,
+	RKFERROR
+}METHOD;
 class ode
 {
 public:
@@ -7,19 +18,24 @@ public:
 		double aC, double bC, double hC, double initC);
 	void taylor_method(void);
 	void print_wt(void);
-	void runga_kutta_four(void);
+	void runge_kutta_four(void);
+	void runge_kutte_fehlberg(const double hMIN, const double hMAX, const double TOL);
 	~ode();
 private:
-	double(*f)(double y, double t);
-	double(*Ft)(double y, double t);
+	double RKF_Math(double *k);
+	double(*f)(double t, double y);
+	double(*Ft)(double t, double y);
 	double a;
 	double b;
 	double h;
-	double ArraySize;
+	double n;
 	double init;
-	double *w;
-	double *t;
-
-	std::string solveMethod = "NOT SOLVED";
+	
+	//double *w;
+	//double *t;
+	vector <double> w;
+	vector <double> t;
+	vector <double> rungKutFehlHValues;
+	METHOD solveMethod = UNSOLVED;
 };
 
