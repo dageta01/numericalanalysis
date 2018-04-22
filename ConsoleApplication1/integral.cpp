@@ -55,7 +55,7 @@ double integral::composite_simpson(int n)
 	double x0, x1, x2, x;
 	x0 = fxn.funct(a) + fxn.funct(b);
 	x1 = 0; x2 = 0;
-	for (int i = 1; i < n - 1; i++) {
+	for (int i = 1; i < n; i++) {
 		x = a + i * h;
 		if (i % 2) {
 			x1 = x1 + fxn.funct(x);

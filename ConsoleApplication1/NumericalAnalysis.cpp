@@ -20,11 +20,19 @@ double factual(double t);
 double rTest(double x);
 int main()
 {
-	numerical n(f, 1, 2, 0.1);
-	integral i(n);
-	i.romberg_integration(10);
-	i.print_romberg();
-	cout << i.composite_simpson(2000) << endl;
+	matrix m(
+		{	{4., -1., 1.},
+			{-1., 4.25, 2.75},
+			{1., 2.75,  3.5}
+		});
+	//m.print_matrix();
+	matrix n = m.cholesky();
+	n.print_matrix(3);
+	//numerical n(f, 1, 2, 0.1);
+	//integral i(n);
+//	i.romberg_integration(10);
+	//i.print_romberg();
+	//cout << i.composite_simpson(20) << endl;
 #ifdef DEBUG
 	numerical n(f, 1, 2, 0.1);
 	numerical n2(n);

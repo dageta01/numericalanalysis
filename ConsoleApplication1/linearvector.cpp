@@ -22,9 +22,30 @@ linearvector::linearvector(std::vector<double> u)
 	v = u;
 }
 
+void linearvector::set(int i, double num)
+{
+	assert(i < v.size());
+	v[i] = num;
+}
+
 const int linearvector::size(void)
 {
 	return v.size();
+}
+
+void linearvector::resize(int size)
+{
+	v.resize(size);
+}
+
+void linearvector::clear()
+{
+	v.clear();
+}
+
+void linearvector::push_back(double num)
+{
+	v.push_back(num);
 }
 
 linearvector::~linearvector()
@@ -59,9 +80,9 @@ double linearvector::operator*(const linearvector & u)
 	return dot;
 }
 
-double linearvector::operator[](const int i)
+double & linearvector::operator[](const int i)
 {
-	return this->v[i];
+	return v[i];
 }
 
 linearvector & linearvector::operator*(const double a)
