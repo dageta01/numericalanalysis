@@ -85,6 +85,21 @@ double numerical::bisection_algorithm(const double TOL)
 	return p;
 }
 
+double numerical::get_a(void)
+{
+	return a;
+}
+
+double numerical::get_b(void)
+{
+	return b;
+}
+
+double numerical::funct(double x)
+{
+	return f(x);
+}
+
 int numerical::get_size()
 {
 	return x.size();
