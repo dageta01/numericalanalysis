@@ -80,15 +80,21 @@ matrix matrix::cholesky()
 	for (int i = 1; i < rowSize; i++) {
 		l[i][0] = vectorMatrix[i][0] / l[0][0];
 	}
+
 	for (int i = 1; i < rowSize - 1; i++) {
+		term = 0;
 		for (int k = 0; k < i; k++) {
-			term += l[i][k] * l[i][k];
+			double a = l[i][k];
+			term += a*a;
 		}
 		l[i][i]= sqrt(vectorMatrix[i][i] - term);
 		term = 0;
 		for (int j = i + 1; j < rowSize; j++) {
 			for (int k = 0; k < i; k++) {
 				term += l[j][k] * l[i][k];
+			}
+			if (j == 3) {
+				NULL;
 			}
 			l[j][i] = (vectorMatrix[j][i] - term)/l[i][i];
 		}
