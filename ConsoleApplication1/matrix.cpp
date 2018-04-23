@@ -77,35 +77,39 @@ matrix matrix::cholesky()
 	matrix l(rowSize, colSize);
 	l[0][0] = sqrt(vectorMatrix[0][0]);
 	double term = 0;
-	for (int i = 1; i < rowSize; i++) {
-		l[i][0] = vectorMatrix[i][0] / l[0][0];
+	int n = rowSize;
+	for (int j = 1; j < n; j++) {
+		l[j][0] = vectorMatrix[j][0] / l[0][0];
 	}
-
-	for (int i = 1; i < rowSize - 1; i++) {
-		term = 0;
-		for (int k = 0; k < i; k++) {
-			double a = l[i][k];
-			term += a*a;
-		}
-		l[i][i]= sqrt(vectorMatrix[i][i] - term);
-		term = 0;
-		for (int j = i + 1; j < rowSize; j++) {
-			for (int k = 0; k < i; k++) {
-				term += l[j][k] * l[i][k];
+	for (int i = 1; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			term = 0;
+			if (i == j) {
+				for (int k = 0; k < i; k++) {
+					double a = l[i][k];
+					term += a * a;
+				}
+				l[i][i] = sqrt(vectorMatrix[i][i] - term);
 			}
-			if (j == 3) {
-				NULL;
-			}
-			l[j][i] = (vectorMatrix[j][i] - term)/l[i][i];
-		}
+			else {
+				if (j == 3) {
 
+				}
+				for (int k = 0; k <= i - 1; k++) {
+					double a = l[j][k];
+					double b = l[i][k];
+					term += a * b;
+				}
+				l[j][i] = (vectorMatrix[j][i] - term) / l[i][i];
+			}
+		}
 	}
 	term = 0;
-	for (int i = 0; i < rowSize - 1; i++) {
-		double a = l[rowSize - 1][i];
-		term += l[rowSize - 1][i] * l[rowSize - 1][i];
+	for (int k = 0; k < n - 1; k++) {
+		double a = l[n - 1][k];
+		term += a * a;
 	}
-	l[rowSize - 1][rowSize - 1] = sqrt(vectorMatrix[rowSize - 1][rowSize - 1] - term);
+	l[n - 1][n - 1] = sqrt(vectorMatrix[n - 1][n - 1] - term);
 	return l;
 }
 
