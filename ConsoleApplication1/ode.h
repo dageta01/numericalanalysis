@@ -9,7 +9,8 @@ enum METHOD {
 	TAYLOR,
 	RKOF,
 	RKF,
-	RKFERROR
+	RKFERROR,
+	EULER
 };
 
 class ode
@@ -20,9 +21,10 @@ public:
 	void taylor_method(void);
 	void print_wt(void);
 	void runge_kutta_four(void);
-	void runge_kutte_fehlberg(const double hMIN, const double hMAX, const double TOL);
+	void runge_kutta_fehlberg(const double hMIN, const double hMAX, const double TOL);
 	void print_solution(void);
 	void real_compare(double(*fact)(double t));
+	void euler_algorithm();
 	~ode();
 private:
 	double RKF_Math(double *k);

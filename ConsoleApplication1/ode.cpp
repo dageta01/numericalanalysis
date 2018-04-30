@@ -19,15 +19,16 @@ void ode::print_solution(void)
 		break;
 	case TAYLOR:
 		for (int i = 0; i < t.size(); i++) {
-			cout << "t[" << i << "] = " << t[i];
-			cout << ", w[" << i << "] = " << w[i] << endl;
+			if (i < 260 && i % (260/20) == 0 || i >= 260) {
+				cout << "t[" << i << "] = " << t[i];
+				cout << ", w[" << i << "] = " << w[i] << endl;
+			}
 		}
 		break;
 	case RKOF:
 		for (int i = 0; i < t.size(); i++) {
 			cout << "t[" << i << "] = " << t[i];
 			cout << ", w[" << i << "] = " << w[i] << endl;;
-			cout << ", h" << i << " = " << rungKutFehlHValues[i] << endl;
 		}
 		break;
 	case RKF:
@@ -63,9 +64,22 @@ void ode::real_compare(double(*fact)(double t))
 		factual = fact(t[i]);
 		error = fabs(w[i] - factual);
 		cout << "t[" << i << "] = " << t[i] << ", w[" << i
-			<< "] = " << w[i] << " f(t[" << i << "]) = "
+			<< "] = " << w[i] << ", f(t[" << i << "]) = "
 			<< factual << ", error = " << error << endl;
 	}
+}
+
+void ode::euler_algorithm()
+{
+	h = (b - a) / n;
+	t.push_back(a);
+	w.push_back(init);
+	for (int i = 1; i <= n; i++) {
+		double pushback = w.back() + h * f(t.back(), w.back());
+		w.push_back(pushback);
+		t.push_back(t.back() + h);
+	}
+	solveMethod = EULER;
 }
 
 void ode::taylor_method(void)
@@ -118,7 +132,7 @@ void ode::runge_kutta_four(void)
 	solveMethod = RKOF;
 }
 
-void ode::runge_kutte_fehlberg(const double hMIN, const double hMAX, const double TOL)
+void ode::runge_kutta_fehlberg(const double hMIN, const double hMAX, const double TOL)
 {
 	const double hOld = h;
 	h = hMAX;
@@ -166,6 +180,7 @@ void ode::runge_kutte_fehlberg(const double hMIN, const double hMAX, const doubl
 			flag = 0;
 		}
 	}
+	h = hOld;
 }
 
 double ode::RKF_Math(double *k)
