@@ -7,11 +7,12 @@
 #include "ode.h"
 #include <cmath>
 #include <vector>
+#include <iomanip>
 #include "integral.h"
 #include "matrix.h"
 #include "linearvector.h"
 
-#define P4
+#define P5
 #define PI 3.141592653589798323846
 #define SQRTPI 1.772453850905516027298
 double problem3(double, double);
@@ -58,7 +59,15 @@ int main()
 #endif // DEBUG
 
 	//std::cout << p << std::endl;
-	
+#ifdef P1
+	numerical n(erfterm, 0., 1.0, 0.1);
+	integral i(n);
+	i.romberg_integration(pow(10, -7));
+//	i.print_romberg();
+	//cout << setprecision(10) << i.composite_simpson(74) << endl;
+	//i.print_romberg();
+#endif
+
 #ifdef P2
 	ode o(problem2, problem2, 0., 50., 1./12., 0.01);
 	o.euler_algorithm();
@@ -77,12 +86,27 @@ int main()
 	//o.print_solution();
 	o.real_compare(problem4actual);
 #endif
-
+#ifdef P5
+	matrix m({
+		{4., 1., 1., 1.},
+		{1., 3., 0., -1.},
+		{1., 0., 2., 1.},
+		{1., -1., 1., 4.}
+		});
+	matrix l = m.cholesky();
+	l.print_matrix(8);
+	linearvector b;
+	b.push_back(2); b.push_back(2);
+	b.push_back(1); b.push_back(1);
+	cout << l.cholesky_solve(b, l) << endl;
+#endif
 	std::getchar();
     return 0;
 }
 
-
+double erfterm(double x) {
+	return (2. / SQRTPI) * exp(-x * x);
+}
 double problem2(double t, double p) {
 	double r = 0.1, b = 0.02, d = 0.015;
 	return r * b*(1. - p);
@@ -90,16 +114,6 @@ double problem2(double t, double p) {
 double problem2sol(double t)
 {
 	return 1. - 0.99*exp(-0.002 * t);
-}
-
-double problem4(double t, double y)
-{
-	return (y*y + y) / t;
-}
-
-double problem4actual(double t)
-{
-	return 2. * t / (1. - 2.*t);
 }
 
 
@@ -117,7 +131,12 @@ double problem3dif(double t, double v) {
 	double denom = m * fabs(v);
 	return numerator / denom;
 }
-
-double erfterm(double x) {
-	return 2. / SQRTPI * exp(-x * x);
+double problem4(double t, double y)
+{
+	return (y*y + y) / t;
 }
+double problem4actual(double t)
+{
+	return 2. * t / (1. - 2.*t);
+}
+

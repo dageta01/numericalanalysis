@@ -17,6 +17,7 @@ public:
 	linearvector &operator[](int i);
 	matrix transpose();
 	matrix cholesky();
+	linearvector cholesky_solve(linearvector, matrix);
 
 	~matrix();
 private:

@@ -65,6 +65,7 @@ void integral::romberg_integration(double TOL)
 		if (i > 2 && fabs(romberg[i - 2][i - 2] - romberg[i - 1][i - 1]) <= TOL) {
 			if (abs(romberg[i - 1][i - 1] - romberg[i][i] <= TOL)) {
 				done = true;
+				std::cout << "R steps: " << i << std::endl;
 			}
 		}
 		h /= 2.0;

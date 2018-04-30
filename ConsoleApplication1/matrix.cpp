@@ -81,6 +81,8 @@ matrix matrix::cholesky()
 	for (int j = 1; j < n; j++) {
 		l[j][0] = vectorMatrix[j][0] / l[0][0];
 	}
+	l.print_matrix(8);
+	cout << endl;
 	for (int i = 1; i < n; i++) {
 		for (int j = i; j < n; j++) {
 			term = 0;
@@ -101,6 +103,8 @@ matrix matrix::cholesky()
 					term += a * b;
 				}
 				l[j][i] = (vectorMatrix[j][i] - term) / l[i][i];
+				l.print_matrix(8);
+				cout << endl;
 			}
 		}
 	}
@@ -109,8 +113,38 @@ matrix matrix::cholesky()
 		double a = l[n - 1][k];
 		term += a * a;
 	}
+
 	l[n - 1][n - 1] = sqrt(vectorMatrix[n - 1][n - 1] - term);
 	return l;
+}
+
+linearvector matrix::cholesky_solve(linearvector b, matrix l)
+{
+
+	int n = l[0].size();
+	linearvector y(b.size());
+	matrix lt = l.transpose();
+	linearvector x(n);
+	double term = 0;
+	assert(b.size() > 0);
+	assert(vectorMatrix[0].size() == b.size());
+	y[0] = b[0] / l[0][0];
+	for (int i = 1; i < n; i++) {
+		term = 0;
+		for (int j = 0; j <= i-1; j++) {
+			term += l[i][j] * y[j];
+			y[i] = (b[i] - term) / l[i][i];
+		}
+	}
+	x[n - 1] = y[n - 1] / l[n - 1][n - 1];
+	for (int i = n -2; i >= 0; i--) {
+		term = 0;
+		for (int j = i + 1; j < n; j++) {
+			term += l[j][i] * x[j];
+		}
+		x[i] = (y[i] - term) / l[i][i];
+	}
+	return x;
 }
 
 
