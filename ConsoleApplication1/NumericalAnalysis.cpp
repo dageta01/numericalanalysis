@@ -12,28 +12,33 @@
 #include "linearvector.h"
 
 #define PI 3.141592653589798323846
+#define SQRTPI 1.772453850905516027298
 double f(double x);
 
 double f2(double, double);
 double f2p(double, double);
 double factual(double t);
 double rTest(double x);
+double erfterm(double x);
 int main()
 {
+	/*
 	matrix m(
 		{	{4., 1., 1., 1.},
 			{1., 3., 0., -1.},
 			{1., 0., 2., 1.},
 			{1., -1., 1., 4.}
 		});
-	//m.print_matrix();
+	m.print_matrix();
+	
 	matrix n = m.cholesky();
 	n.print_matrix(3);
-	//numerical n(f, 1, 2, 0.1);
-	//integral i(n);
-//	i.romberg_integration(10);
-	//i.print_romberg();
-	//cout << i.composite_simpson(20) << endl;
+	*/
+	numerical n(erfterm, 0, 1, 0.1);
+	integral i(n);
+	i.romberg_integration(0.0000001);
+	i.print_romberg();
+	cout << i.composite_simpson(200) << endl;
 #ifdef DEBUG
 	numerical n(f, 1, 2, 0.1);
 	numerical n2(n);
@@ -78,4 +83,7 @@ double f2p(double t, double y) {
 
 double factual(double t) {
 	return exp(1.0 / 2.0 * (-1.0 + t * t));
+}
+double erfterm(double x) {
+	return 2. / SQRTPI * exp(-x * x);
 }

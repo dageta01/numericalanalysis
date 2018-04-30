@@ -10,6 +10,7 @@ class integral
 public:
 	integral(const numerical constFxn);
 	void romberg_integration(int n);
+	void romberg_integration(double TOL);
 	void print_romberg(void);
 	double composite_simpson(int n);
 	~integral();
